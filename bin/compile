@@ -48,6 +48,10 @@ for PACKAGE in $(cat $BUILD_DIR/Aptfile); do
     continue
   fi
 
+  if [[ $PACKAGE == file://* ]]; then
+    PACKAGE="file://${BUILD_DIR}/$(echo $PACKAGE | cut -c8-)"
+  fi
+
   if [[ $PACKAGE == *deb ]]; then
     PACKAGE_NAME=$(basename $PACKAGE .deb)
     PACKAGE_FILE=$APT_CACHE_DIR/archives/$PACKAGE_NAME.deb
