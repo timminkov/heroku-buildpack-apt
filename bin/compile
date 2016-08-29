@@ -40,8 +40,12 @@ APT_OPTIONS="-o debug::nolocking=true -o dir::cache=$APT_CACHE_DIR -o dir::state
 topic "Cleaning apt caches"
 apt-get $APT_OPTIONS clean | indent
 
+apt-get $APT_OPTIONS -y install software-properties-common python-software-properties
+add-apt-repository $APT_OPTIONS ppa:inkscape.dev/stable
+
 topic "Updating apt caches"
 apt-get $APT_OPTIONS update | indent
+
 
 for PACKAGE in $(cat $BUILD_DIR/Aptfile); do
   if [[ $PACKAGE == \#* ]]; then
